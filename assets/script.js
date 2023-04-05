@@ -1,62 +1,92 @@
-// Assignment code here
 
-// Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
+var password = document.getElementById("password");
+var passwordText = document.querySelector("#password");
+var char = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+~`|}{[]:;?><,./-=";
 
-// Write password to the #password input
 function generatePassword() {
-  var charLength = confirm("Have a password length of at least 8 characters?");
-  var randNum = confirm("Have a password with numeric characters?");
-  var randUp = confirm("Have a password with uppercase characters?");
-  var randLow = confirm("Have a password with lowercase characters?");
-  var randSpec = confirm("Have a password with special characters?");
 
-  const char = {
-    num:"0123456789",
-    upper:"ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-    lower:"abcdefghijklmnopqrstuvwxyz",
-    special:"!@#$%^&*()_+~`|}{[]:;?><,./-=",
+  const leng = prompt("Enter a numerical character length, must be in between 8-128 characters");
+  const numeric = confirm("Include numerics?");
+  const upperCase = confirm("Include uppercase letters?");
+  const lowerCase = confirm("Include lowercase letters?");
+  const spec = confirm("Include special characters?");
+
+//Password parameters all true//
+  if (generatePassword) {
+  var password = '';
+
+  for (let i=0; i<leng; i++) {
+    let randNum = Math.floor(Math.random()*char.length);
+    password += char.substring(randNum, randNum + 1);   
+  }
+  document.getElementById("password").value = password;
+
+//Length inputs//
+  if (Math.floor(leng) < 8) {
+    alert("Insufficient length, please enter a longer character length");
+    return
+  } else if (Math.floor(leng) > 128) {
+    alert("Length is too long, please enter a shorter character length.");
+    return
+  } else if (isNaN(Math.floor(leng))) {
+    alert("Invalid length input, please enter a numerical value");
+    return
+  } else if (Math.floor(leng) === false) {
+    alert("Cancelling generation due to cancelled length input or length input as 0")
+    return
+  }
   }
 
-  const randSet = [
-
-    function num() {
-      return char.num[Math.floor(Math.random()*char.num.length)];
-    },
-
-    function upper() {
-      return char.upper[Math.floor(Math.random()*char.upper.length)];
-    },
-
-    function lower() {
-      return char.lower[Math.floor(Math.random()*char.lower.length)];
-    },
-
-    function special() {
-      return char.special[Math.floor(Math.random()*char.special.length)];
+  //No numbers input//
+  if (!numeric) {
+    var noNumPass = '';
+    noNum = char.replace(/\d+/g,'');
+    
+    for (let i=0; i<leng; i++) {
+      let randNum = Math.floor(Math.random()*noNum.length);
+      noNumPass += noNum.substring(randNum, randNum + 1);   
     }
-  ];
- 
-//At least 8 characters//
-  if (charLength) {
-    confirm(randNum);
+     document.getElementById("password").value = noNumPass;
+  }
 
+  //No caps input//
+  if (!upperCase) {
+    var noCapPass = '';
+    noCap = char.replace(/[A-Z]+/g, '');
+    
+    for (let i=0; i<leng; i++) {
+      let randNum = Math.floor(Math.random()*noCap.length);
+      noCapPass += noCap.substring(randNum, randNum + 1);   
+    }
+     document.getElementById("password").value = noCapPass;
+  }
 
-  //No more than 128 characters//
-  if (!charLength) {
-    window.alert("Im false")
+  //No lowercase input//
+  if (!lowerCase) {
+    var noLowPass = '';
+    noLow = char.replace(/[a-z]+/g, '');
+    
+    for (let i=0; i<leng; i++) {
+      let randNum = Math.floor(Math.random()*noLow.length);
+      noLowPass += noLow.substring(randNum, randNum + 1);   
+    }
+     document.getElementById("password").value = noLowPass;
+  }
+
+  //No specials input//
+  if (!spec) {
+    var noSpecPass = '';
+    noSpec = char.replace(/[^a-zA-Z0-9]/g, '');
+    
+    for (let i=0; i<leng; i++) {
+      let randNum = Math.floor(Math.random()*noSpec.length);
+      noSpecPass += noSpec.substring(randNum, randNum + 1);   
+    }
+     document.getElementById("password").value = noSpecPass;
   }
 
 }
-}
 
-function writePassword() {
-  
-  var password = generatePassword();
-  var passwordText = document.querySelector("#password");
-
-  passwordText.value = password;
-}
-
-// Add event listener to generate button
-generateBtn.addEventListener("click", writePassword);
+//Event listener//
+generateBtn.addEventListener("click", generatePassword);
