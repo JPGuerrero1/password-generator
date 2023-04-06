@@ -25,7 +25,7 @@ function passCrit () {
     if (isNaN(leng)) {
         alert("Invalid input type, only enter numeric characters.");
         return false;
-    }
+        }
     if (leng<8) {
         alert("Length is too short, enter a value that is larger than or equal to 8 number characters.");
         return false;
@@ -34,7 +34,7 @@ function passCrit () {
         alert("Length is too long, enter a value that is less than or equal to 128 number characters.");
         return false;
         }
-
+    
     //if statements to determine which arrays to combine into a passMix. Confirm statements that are 'true' are added and returned
     if (confirm("Include numbers in your password?")) {
         passMix = passMix.concat(num);
@@ -61,7 +61,7 @@ function randomPassword() {
         passwordRand = passwordRand + passMix[random];   
       }
        return passwordRand; //this becomes the 'passwordRand' variable in writePassword()
- }
+}
 
 //function will write the final password if all of the criteria is met in the passCrit() function and has been randomized in the randomPassword() function
 function writePassword() {
